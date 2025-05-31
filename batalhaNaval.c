@@ -39,9 +39,18 @@ int main() {
     Tabuleiro[6][7] = 3; // linha 7, coluna H
     Tabuleiro[6][8] = 3; // linha 7, coluna I
 
+    //Diagonal
+    Tabuleiro[0][9] = 3; //Linha 1, Coluna J
+    Tabuleiro[1][8] = 3; //Linha 2, Coluna I
+    Tabuleiro[2][7] = 3; //Linha 3, Coluna H
+
+    Tabuleiro[9][1] = 3; //Linha 10, Coluna B
+    Tabuleiro[8][2] = 3; //Linha 9, Coluna C
+    Tabuleiro[7][3] = 3; //linha 8, Coluna D
+
     //4. Exibindo o Tabuleiro
     printf(" TABULEIRO BATALHA NAVAL \n");
-    printf("  ");
+    printf("   ");
     for ( int i = 0; i < 10; i++)
     {
         printf("%c ", linha[i]); //Imprime as letras 
@@ -51,7 +60,7 @@ int main() {
     //Números lateral
     for (int i = 0; i < 10; i++)
     {
-        printf("%d ", Coluna[i]); // imprime 1 2 3...
+        printf("%2d ", Coluna[i]); // imprime 1 2 3...
         
         for (int j = 0; j < 10; j++)
         {
@@ -86,4 +95,4 @@ int main() {
     // 1 1 1 1 1
     // 0 0 1 0 0
 
-}
+
