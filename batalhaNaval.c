@@ -4,6 +4,126 @@
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
 
+ // Nível Mestre - Habilidades Especiais com Matrizes
+    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
+    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
+    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    // Exemplo para habilidade em cruz:
+    // 0 0 1 0 0
+    // 1 1 1 1 1
+    // 0 0 1 0 0
+void AplicarCruz(int Tabuleiro[10][10], int OrigemLinha_Cruz, int OrigemColuna_Cruz){
+    int cruz[5][5];
+
+    //preencher a matriz da cruz
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (i == 2  || j == 2)
+            {
+                cruz[i][j] = 1;
+            } else {
+                cruz[i][j] = 0;
+            }
+            
+        }
+        
+    }
+    
+    //sobrepor a matriz no tabuleiro
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            int lin = OrigemLinha_Cruz - 2 + i;
+            int col = OrigemColuna_Cruz - 2 + j;
+
+            if (lin >= 0 && lin < 10 && col >= 0 && col < 10)
+            {
+                if(cruz[i][j] == 1 && Tabuleiro[lin][col] == 0) {
+                    Tabuleiro[lin][col] = 1;
+                }
+            }
+            
+        }
+        
+    }
+    
+}
+    // Exemplo para habilidade em octaedro:
+    // 0 0 1 0 0
+    // 0 1 1 1 0
+    // 0 0 1 0 0
+void AplicarOctaedro(int Tabuleiro[10][10], int OrigemLinha_Octaedro, int OrigemColuna_Octaedro){
+    
+    int Octaedro[3][3];
+
+    //preenche a matriz com o octaedro
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if(i == 1 || j == 1){
+                Octaedro [i][j] = 1;
+            } else {
+                Octaedro [i][j] = 0;
+            }
+        }
+        
+    }
+    
+    //Aplicar a matriz octaedro ao tabuleiro
+
+    for ( int i = 0; i < 3; i++)
+    {
+            for (int j = 0; j < 3; j++)
+        {
+            int lin = OrigemLinha_Octaedro - 1 + i;
+            int col = OrigemColuna_Octaedro - 1 + j;
+
+
+            //verifica os limites do tabuleiro
+            if (lin >= 0 && lin < 10 && col >= 0 && col < 10)
+            {
+                if(Octaedro[i][j] == 1 && Tabuleiro[lin][col] == 0) {
+                    Tabuleiro[lin][col] = 1;
+                }
+            }
+            
+        }
+        
+    }
+}
+    // Exemplo para habilidade em cone:
+    // 0 0 1 0 0
+    // 0 1 1 1 0
+    // 1 1 1 1 1
+void AplicarCone(int Tabuleiro[10][10], int OrigemLinha_Cone, int OrigemColuna_Cone){
+
+    
+
+    //preencher a matriz cone
+    for (int i = 0; i < 3; i++) //altura do cone
+    {
+        for (int j = -i; j <= i; j++) //largura do cone expandindo
+        {
+            //Aplicar a matriz cone no tabuleiro
+            int lin = OrigemLinha_Cone + i;
+            int col = OrigemColuna_Cone + j;
+
+             //Verificar limites do tabuleiro
+             if(lin >= 0 && lin < 10 && col >= 0 && col < 10){
+                if(Tabuleiro[lin][col] == 0){
+                    Tabuleiro[lin][col] = 1; //área afetada
+                }
+             }
+        }
+        
+    }
+    
+}
+  
 int main() {
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
@@ -27,26 +147,23 @@ int main() {
         
     }
     
-    //Colocar Navios (3)
+    //Define o ponto de origem da Habilidade
+    //Cruz
+    int OrigemLinha_cruz = 2;
+    int OrigemColuna_cruz = 2;
 
-    //vertical
-    Tabuleiro[1][1] = 3; // linha 2, coluna B
-    Tabuleiro[2][1] = 3; // linha 3, coluna B
-    Tabuleiro[3][1] = 3; // linha 4, coluna B
+    //Octaedro
+    int OrigemLinha2_octaedro = 8;
+    int OrigemColuna2_octaedro = 8;
 
-    //Horizontal
-    Tabuleiro[6][6] = 3; // linha 7, coluna G
-    Tabuleiro[6][7] = 3; // linha 7, coluna H
-    Tabuleiro[6][8] = 3; // linha 7, coluna I
+    //Cone
+    int OrigemLinha3_Cone = 4 ;
+    int OrigemColuna3_Cone = 4 ;
 
-    //Diagonal
-    Tabuleiro[0][9] = 3; //Linha 1, Coluna J
-    Tabuleiro[1][8] = 3; //Linha 2, Coluna I
-    Tabuleiro[2][7] = 3; //Linha 3, Coluna H
-
-    Tabuleiro[9][1] = 3; //Linha 10, Coluna B
-    Tabuleiro[8][2] = 3; //Linha 9, Coluna C
-    Tabuleiro[7][3] = 3; //linha 8, Coluna D
+    //Aplica a habilidade Cruz
+    AplicarCruz(Tabuleiro, OrigemLinha_cruz, OrigemColuna_cruz);
+    AplicarOctaedro(Tabuleiro, OrigemLinha2_octaedro, OrigemColuna2_octaedro);
+    AplicarCone(Tabuleiro, OrigemLinha3_Cone, OrigemColuna3_Cone);
 
     //4. Exibindo o Tabuleiro
     printf(" TABULEIRO BATALHA NAVAL \n");
